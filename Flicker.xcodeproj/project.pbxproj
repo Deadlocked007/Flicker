@@ -13,9 +13,11 @@
 		C7B544671C5EEE6300F3AE11 /* GenreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B544661C5EEE6300F3AE11 /* GenreViewController.swift */; };
 		C7B5446B1C5EEF1100F3AE11 /* GenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B5446A1C5EEF1100F3AE11 /* GenreCell.swift */; };
 		C7B5446D1C5EF2BD00F3AE11 /* GenreSelectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B5446C1C5EF2BD00F3AE11 /* GenreSelectedViewController.swift */; };
+		C7B544711C5F012A00F3AE11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7B544701C5F012A00F3AE11 /* Assets.xcassets */; };
+		C7B544731C5F04D600F3AE11 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B544721C5F04D600F3AE11 /* TabBarViewController.swift */; };
+		C7B544771C5F075400F3AE11 /* FirstTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B544761C5F075400F3AE11 /* FirstTab.swift */; };
 		C7BA16F41C5C9FCA00BBE9FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BA16F31C5C9FCA00BBE9FA /* AppDelegate.swift */; };
 		C7BA16FB1C5C9FCA00BBE9FA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7BA16F91C5C9FCA00BBE9FA /* Main.storyboard */; };
-		C7BA16FD1C5C9FCA00BBE9FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7BA16FC1C5C9FCA00BBE9FA /* Assets.xcassets */; };
 		C7BA17001C5C9FCA00BBE9FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7BA16FE1C5C9FCA00BBE9FA /* LaunchScreen.storyboard */; };
 		C7BA17081C5CA4A500BBE9FA /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BA17071C5CA4A500BBE9FA /* NowPlayingViewController.swift */; };
 		C7BA170E1C5CA8CB00BBE9FA /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BA170D1C5CA8CB00BBE9FA /* MovieCell.swift */; };
@@ -33,10 +35,12 @@
 		C7B544661C5EEE6300F3AE11 /* GenreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenreViewController.swift; path = ViewControllers/GenreViewController.swift; sourceTree = "<group>"; };
 		C7B5446A1C5EEF1100F3AE11 /* GenreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenreCell.swift; path = Cells/GenreCell.swift; sourceTree = "<group>"; };
 		C7B5446C1C5EF2BD00F3AE11 /* GenreSelectedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenreSelectedViewController.swift; path = ViewControllers/GenreSelectedViewController.swift; sourceTree = "<group>"; };
+		C7B544701C5F012A00F3AE11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C7B544721C5F04D600F3AE11 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarViewController.swift; path = ViewControllers/TabBarViewController.swift; sourceTree = "<group>"; };
+		C7B544761C5F075400F3AE11 /* FirstTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FirstTab.swift; path = ViewControllers/FirstTab.swift; sourceTree = "<group>"; };
 		C7BA16F01C5C9FCA00BBE9FA /* Flicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7BA16F31C5C9FCA00BBE9FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C7BA16FA1C5C9FCA00BBE9FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C7BA16FC1C5C9FCA00BBE9FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C7BA16FF1C5C9FCA00BBE9FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C7BA17011C5C9FCA00BBE9FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C7BA17071C5CA4A500BBE9FA /* NowPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NowPlayingViewController.swift; path = ViewControllers/NowPlayingViewController.swift; sourceTree = "<group>"; };
@@ -94,12 +98,12 @@
 		C7BA16F21C5C9FCA00BBE9FA /* Flicker */ = {
 			isa = PBXGroup;
 			children = (
+				C7B544701C5F012A00F3AE11 /* Assets.xcassets */,
 				C7B544641C5EDBA800F3AE11 /* wow.png */,
 				C7BA170A1C5CA6DB00BBE9FA /* Cells */,
 				C7BA17091C5CA4B900BBE9FA /* ViewControllers */,
 				C7BA16F31C5C9FCA00BBE9FA /* AppDelegate.swift */,
 				C7BA16F91C5C9FCA00BBE9FA /* Main.storyboard */,
-				C7BA16FC1C5C9FCA00BBE9FA /* Assets.xcassets */,
 				C7BA16FE1C5C9FCA00BBE9FA /* LaunchScreen.storyboard */,
 				C7BA17011C5C9FCA00BBE9FA /* Info.plist */,
 			);
@@ -115,6 +119,8 @@
 				C7B544601C5ED67C00F3AE11 /* UpcomingViewController.swift */,
 				C7B544661C5EEE6300F3AE11 /* GenreViewController.swift */,
 				C7B5446C1C5EF2BD00F3AE11 /* GenreSelectedViewController.swift */,
+				C7B544721C5F04D600F3AE11 /* TabBarViewController.swift */,
+				C7B544761C5F075400F3AE11 /* FirstTab.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -191,8 +197,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7BA17001C5C9FCA00BBE9FA /* LaunchScreen.storyboard in Resources */,
-				C7BA16FD1C5C9FCA00BBE9FA /* Assets.xcassets in Resources */,
 				C7BA16FB1C5C9FCA00BBE9FA /* Main.storyboard in Resources */,
+				C7B544711C5F012A00F3AE11 /* Assets.xcassets in Resources */,
 				C7B544651C5EDBA800F3AE11 /* wow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,6 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7B544771C5F075400F3AE11 /* FirstTab.swift in Sources */,
 				C7B544671C5EEE6300F3AE11 /* GenreViewController.swift in Sources */,
 				C7B5446D1C5EF2BD00F3AE11 /* GenreSelectedViewController.swift in Sources */,
 				C7B544611C5ED67C00F3AE11 /* UpcomingViewController.swift in Sources */,
@@ -260,6 +267,7 @@
 				C7BA16F41C5C9FCA00BBE9FA /* AppDelegate.swift in Sources */,
 				C7BA170E1C5CA8CB00BBE9FA /* MovieCell.swift in Sources */,
 				C7D387131C5DA9250076D60B /* DetailViewController.swift in Sources */,
+				C7B544731C5F04D600F3AE11 /* TabBarViewController.swift in Sources */,
 				C7B5445F1C5ED4E600F3AE11 /* TopRatedViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,6 +17,7 @@ class NowPlayingViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet weak var collectionView: UICollectionView!
     
     
+    @IBOutlet weak var errorButton: UIButton!
     var movies: [NSDictionary]?
     
     var filteredData: [NSDictionary]?
@@ -77,11 +78,16 @@ class NowPlayingViewController: UIViewController, UICollectionViewDataSource, UI
                             
                             
                             self.filteredData = responseDictionary["results"] as? [NSDictionary]
+                            self.errorButton.hidden = true
                             self.collectionView.reloadData()
                             MBProgressHUD.hideHUDForView(self.view, animated: true)
 
                             
                     }
+                } else {
+                    self.errorButton.hidden = false
+                    
+                    MBProgressHUD.hideHUDForView(self.view, animated: true)
                 }
         })
         task.resume()
@@ -195,6 +201,9 @@ class NowPlayingViewController: UIViewController, UICollectionViewDataSource, UI
             }
         }
         collectionView.reloadData()
+    }
+    @IBAction func error(sender: AnyObject) {
+        loadDataFromNetwork()
     }
     
     // MARK: - Navigation
