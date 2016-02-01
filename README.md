@@ -35,7 +35,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<a href='http://i.giphy.com/3o7ZenkZhURYRTkRmE.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<a href='http://i.giphy.com/3o7ZenkZhURYRTkRmE.gif'>Click here for GIF</a>
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
