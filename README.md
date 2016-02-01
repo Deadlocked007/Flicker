@@ -42,7 +42,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Notes
 
 Describe any challenges encountered while building the app.
-
+While building this app the most challenging thing I encountered was trying to customize the ui and icons and such. This probably stems from my lack of imagination and very low skill level in graphical design. Another problem was understand how to parse the JSON data and use different endpoints. I also finally got a macbook so woohoo.
 ## License
 
     Copyright [2016] [Siraj Zaneer]
