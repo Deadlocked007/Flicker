@@ -140,7 +140,7 @@ class DetailViewController: UIViewController, UICollectionViewDataSource, UIColl
                     // possibly try to get the large image
             })
             smallPoster.setImageWithURLRequest(
-                smallImageRequest,
+                largeImageRequest,
                 placeholderImage: nil,
                 success: { (imageRequest, imageResponse, image) -> Void in
                     
