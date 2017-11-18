@@ -45,6 +45,7 @@ class MoviesViewController: UITableViewController {
             let alert = UIAlertController(title: "Error", message: "You are not connected to the Internet!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Try Again", style: .cancel, handler: { (alert) in
                 SVProgressHUD.show()
+                self.loadMovies()
             }))
             self.present(alert, animated: true, completion: nil)
             UIApplication.shared.endIgnoringInteractionEvents()
