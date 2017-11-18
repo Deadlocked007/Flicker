@@ -150,7 +150,7 @@ class MoviesViewController: UITableViewController {
                         downloadImageFromURL(url: posterUrlBig) { (largePoster) in
                             DispatchQueue.main.async {
                                 if (cell.tag == indexPath.row) {
-                                    UIView.transition(with: cell.posterView, duration: 0.2, options: .transitionCrossDissolve, animations: {
+                                    UIView.transition(with: cell.posterView, duration: 1.0, options: .transitionCrossDissolve, animations: {
                                         cell.posterView.image = largePoster
                                     }, completion: nil)
                                     self.posters[posterUrlBig] = largePoster
