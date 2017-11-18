@@ -10,11 +10,11 @@ import UIKit
 
 class MovieClient {
     
-    let sharedInstance = MovieClient()
+    static let sharedInstance = MovieClient()
     let baseURL = "https://api.themoviedb.org/3/movie/"
     let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
     
-    func getMovies(endpoint: MovieListEndpoints, page: Int, success: @escaping ([Movie]) -> (), failure: @escaping (Error) -> ()) {
+    func getMovies(endpoint: MovieListEndpoints, page: Int, success: @escaping ([Movie]) -> (), failure: @escaping () -> ()) {
         let urlString = baseURL + endpoint.rawValue
         var urlComp = URLComponents(string: urlString)
         var qItems = [URLQueryItem(name: "api_key", value: apiKey)]
@@ -23,12 +23,14 @@ class MovieClient {
         let url = urlComp!.url!
         let urlSession = URLSession(configuration: .default)
         let task = urlSession.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                failure(error)
+            if error != nil {
+                failure()
             } else if let data = data {
-                let decoder = JSONDecoder()
-                guard let movies = try? decoder.decode([Movie].self, from: data) else {
-                    return
+                let jsonData = try! JSONSerialization.jsonObject(with: data, options: []) as! Dictionary<String, Any>
+                let results = jsonData["results"] as! [Dictionary<String, Any>]
+                var movies = [Movie]()
+                for result in results {
+                    movies.append(Movie(movieInfo: result))
                 }
                 success(movies)
             }
