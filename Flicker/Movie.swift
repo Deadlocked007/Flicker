@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Movie: Decodable {
+class Movie {
     var votes: Int
     var id: Int
     var video: Bool
@@ -22,6 +22,7 @@ class Movie: Decodable {
     var backdropPath: String
     var adult: Bool
     var overview: String
+    var posterImage: UIImage?
     //var releaseDate: Date
     
     init(movieInfo: Dictionary<String, Any>) {

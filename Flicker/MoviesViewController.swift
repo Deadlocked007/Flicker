@@ -15,6 +15,7 @@ class MoviesViewController: UITableViewController {
     var filteredMovies = [Movie]()
     let searchController = UISearchController(searchResultsController: nil)
     let refresh = UIRefreshControl()
+    var posters: [String:UIImage] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,7 +102,7 @@ class MoviesViewController: UITableViewController {
         return movies.count
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.setSelected(false, animated: true)
     }
@@ -123,33 +124,45 @@ class MoviesViewController: UITableViewController {
         cell.overviewLabel.text = movie.overview
         cell.titleLabel.sizeToFit()
         cell.overviewLabel.sizeToFit()
-        var posterUrl = posterBaseSmall + movie.posterPath
-        downloadImageFromURL(url: posterUrl) { (smallPoster) in
+        var posterUrlSmall = posterBaseSmall + movie.posterPath
+        let posterUrlBig = posterBase + movie.posterPath
+        if ((posters[posterUrlBig]) != nil) {
             DispatchQueue.main.async {
                 if (cell.tag == indexPath.row) {
-                    cell.posterView.alpha = 0.0
-                    cell.posterView.image = smallPoster
+                    cell.posterView.image = self.posters[posterUrlBig]
                 }
-                
-                
-                UIView.animate(withDuration: 0.3, animations: { () -> Void in
+            }
+        } else {
+            downloadImageFromURL(url: posterUrlSmall) { (smallPoster) in
+                DispatchQueue.main.async {
+                    if (cell.tag == indexPath.row) {
+                        cell.posterView.alpha = 0.0
+                        cell.posterView.image = smallPoster
+                    }
                     
-                    cell.posterView.alpha = 1.0
                     
-                }, completion: { (sucess) -> Void in
-                    posterUrl = posterBase + movie.posterPath
-                    downloadImageFromURL(url: posterUrl) { (largePoster) in
-                        DispatchQueue.main.async {
-                            if (cell.tag == indexPath.row) {
-                                cell.posterView.image = largePoster
+                    UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                        
+                        cell.posterView.alpha = 1.0
+                        
+                    }, completion: { (sucess) -> Void in
+                        
+                        downloadImageFromURL(url: posterUrlBig) { (largePoster) in
+                            DispatchQueue.main.async {
+                                if (cell.tag == indexPath.row) {
+                                    UIView.transition(with: cell.posterView, duration: 0.2, options: .transitionCrossDissolve, animations: {
+                                        cell.posterView.image = largePoster
+                                    }, completion: nil)
+                                    self.posters[posterUrlBig] = largePoster
+                                }
                             }
                         }
-                    }
-                })
+                    })
+                }
             }
         }
         
-        cell.selectionStyle = .none
+        //cell.selectionStyle = .none
         let backgroundView = UIView()
         backgroundView.backgroundColor = UIColor.darkGray
         cell.selectedBackgroundView = backgroundView
