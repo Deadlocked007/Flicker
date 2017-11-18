@@ -10,10 +10,11 @@ import UIKit
 import SVProgressHUD
 
 class MoviesViewController: UITableViewController {
-
+    
     var movies = [Movie]()
     var filteredMovies = [Movie]()
     let searchController = UISearchController(searchResultsController: nil)
+    let refresh = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,14 +30,26 @@ class MoviesViewController: UITableViewController {
         } else {
             // Fallback on earlier versions
         }
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refresh
+        } else {
+            tableView.addSubview(refresh)
+        }
         
-        
-        refreshControl = UIRefreshControl()
-        refreshControl?.target(forAction: #selector(loadMovies), withSender: nil)
-        tableView.insertSubview(refreshControl!, at: 0)
+        refresh.addTarget(self, action: #selector(loadMovies), for: .valueChanged)
         UIApplication.shared.beginIgnoringInteractionEvents()
         SVProgressHUD.show()
-        loadMovies()
+        if Reachability.isConnectedToNetwork(){
+            loadMovies()
+        }else{
+            let alert = UIAlertController(title: "Error", message: "You are not connected to the Internet!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Try Again", style: .cancel, handler: { (alert) in
+                SVProgressHUD.show()
+            }))
+            self.present(alert, animated: true, completion: nil)
+            UIApplication.shared.endIgnoringInteractionEvents()
+            SVProgressHUD.dismiss()
+        }
     }
     
     @objc func loadMovies() {
@@ -46,13 +59,27 @@ class MoviesViewController: UITableViewController {
                 self.tableView.reloadData()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 SVProgressHUD.dismiss()
-                self.refreshControl?.endRefreshing()
+                self.refresh.endRefreshing()
             }
         }) { () in
-            print("error")
+            if Reachability.isConnectedToNetwork(){
+                let alert = UIAlertController(title: "Error", message: "There was an issue loading the movies", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Try Again", style: .cancel, handler: { (alert) in
+                    SVProgressHUD.show()
+                    self.loadMovies()
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }else{
+                let alert = UIAlertController(title: "Error", message: "You are not connected to the Internet!", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Try Again", style: .cancel, handler: { (alert) in
+                    SVProgressHUD.show()
+                    self.loadMovies()
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
             UIApplication.shared.endIgnoringInteractionEvents()
             SVProgressHUD.dismiss()
-            self.refreshControl?.endRefreshing()
+            self.refresh.endRefreshing()
         }
     }
     
@@ -64,7 +91,7 @@ class MoviesViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {
             return filteredMovies.count
@@ -72,7 +99,7 @@ class MoviesViewController: UITableViewController {
         
         return movies.count
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MovieCell
@@ -80,7 +107,7 @@ class MoviesViewController: UITableViewController {
         var movie: Movie!
         cell.tag = indexPath.row
         cell.posterView.image = nil
-    
+        
         
         if isFiltering() {
             movie = filteredMovies[indexPath.row]
@@ -102,7 +129,7 @@ class MoviesViewController: UITableViewController {
         }
         return cell
     }
-
+    
 }
 
 extension MoviesViewController: UISearchResultsUpdating, UISearchBarDelegate {

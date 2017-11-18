@@ -90,7 +90,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Flicker" id="t94-zc-SyG">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="0ev-69-5Ns"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="0ev-69-5Ns">
+                            <connections>
+                                <action selector="onSearch:" destination="SNA-Vr-v0V" id="XSf-CA-1s8"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hHD-jG-48v" userLabel="First Responder" sceneMemberID="firstResponder"/>

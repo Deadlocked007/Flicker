@@ -18,6 +18,7 @@
 		C76FDB5D1FC009B30027D215 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76FDB5C1FC009B30027D215 /* MovieCell.swift */; };
 		C76FDB5F1FC0111D0027D215 /* MovieResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76FDB5E1FC0111D0027D215 /* MovieResponse.swift */; };
 		C76FDB611FC015D80027D215 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76FDB601FC015D80027D215 /* Helper.swift */; };
+		C76FDB631FC01BFE0027D215 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76FDB621FC01BFE0027D215 /* Reachability.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		C76FDB5C1FC009B30027D215 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		C76FDB5E1FC0111D0027D215 /* MovieResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResponse.swift; sourceTree = "<group>"; };
 		C76FDB601FC015D80027D215 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		C76FDB621FC01BFE0027D215 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 				C76FDB5C1FC009B30027D215 /* MovieCell.swift */,
 				C76FDB5E1FC0111D0027D215 /* MovieResponse.swift */,
 				C76FDB601FC015D80027D215 /* Helper.swift */,
+				C76FDB621FC01BFE0027D215 /* Reachability.swift */,
 			);
 			path = Flicker;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				C76FDB571FBFF23F0027D215 /* Movie.swift in Sources */,
 				C76FDB5F1FC0111D0027D215 /* MovieResponse.swift in Sources */,
 				C76FDB5D1FC009B30027D215 /* MovieCell.swift in Sources */,
+				C76FDB631FC01BFE0027D215 /* Reachability.swift in Sources */,
 				C76FDB5B1FBFFE9C0027D215 /* MovieClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
