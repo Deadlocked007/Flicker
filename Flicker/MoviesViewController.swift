@@ -101,6 +101,10 @@ class MoviesViewController: UITableViewController {
         return movies.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.setSelected(false, animated: true)
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MovieCell
@@ -108,7 +112,6 @@ class MoviesViewController: UITableViewController {
         var movie: Movie!
         cell.tag = indexPath.row
         cell.posterView.image = nil
-        
         
         if isFiltering() {
             movie = filteredMovies[indexPath.row]
@@ -120,14 +123,37 @@ class MoviesViewController: UITableViewController {
         cell.overviewLabel.text = movie.overview
         cell.titleLabel.sizeToFit()
         cell.overviewLabel.sizeToFit()
-        let posterUrl = posterBase + movie.posterPath
-        downloadImageFromURL(url: posterUrl) { (posterImage) in
+        var posterUrl = posterBaseSmall + movie.posterPath
+        downloadImageFromURL(url: posterUrl) { (smallPoster) in
             DispatchQueue.main.async {
                 if (cell.tag == indexPath.row) {
-                    cell.posterView.image = posterImage
+                    cell.posterView.alpha = 0.0
+                    cell.posterView.image = smallPoster
                 }
+                
+                
+                UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                    
+                    cell.posterView.alpha = 1.0
+                    
+                }, completion: { (sucess) -> Void in
+                    posterUrl = posterBase + movie.posterPath
+                    downloadImageFromURL(url: posterUrl) { (largePoster) in
+                        DispatchQueue.main.async {
+                            if (cell.tag == indexPath.row) {
+                                cell.posterView.image = largePoster
+                            }
+                        }
+                    }
+                })
             }
         }
+        
+        cell.selectionStyle = .none
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.darkGray
+        cell.selectedBackgroundView = backgroundView
+        
         return cell
     }
     

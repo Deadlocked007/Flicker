@@ -8,7 +8,8 @@
 
 import UIKit
 
-let posterBase = "https://image.tmdb.org/t/p/w640"
+let posterBase = "https://image.tmdb.org/t/p/original"
+let posterBaseSmall = "https://image.tmdb.org/t/p/w45"
 
 func downloadImageFromURL(url: String, success: @escaping (UIImage) -> ()) {
     DispatchQueue.global().async {

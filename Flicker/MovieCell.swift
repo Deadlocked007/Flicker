@@ -18,4 +18,5 @@ class MovieCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
 }
