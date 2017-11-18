@@ -1,51 +1,51 @@
-# Project 2 - *Flicker*
+# Project 1 - *Flicker*
 
-**Flicker** is a movies app displaying box office and top rental DVDs using [The Movie Database API](http://docs.themoviedb.apiary.io/#).
+**Name of your app** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **15** hours spent in total
+Time spent: **5** hours spent in total
 
 ## User Stories
 
-The following **required** functionality is completed:
+The following **required** user stories are complete:
 
-- [x] User can view movie details by tapping on a cell.
-- [x] User can select from a tab bar for either **Now Playing** or **Top Rated** movies.
-- [x] Customize the selection effect of the cell.
+- [x] User sees app icon in home screen and styled launch screen (+1pt)
+- [x] User can scroll through a list of movies currently playing in theaters from The Movie DB API (+5pt)
+- [x] User can "Pull to refresh" the movie list (+2pt)
+- [x] User sees a loading state while waiting for the movies to load (+2pt)
 
-The following **optional** features are implemented:
+The following **optional** user stories are implemented:
 
-- [x] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
-- [x] Customize the navigation bar.
+- [x] User sees an alert when there's a networking error (+1pt)
+- [x] User can search for a movie (+3pt)
+- [x] While poster is being fetched, user see's a placeholder image (+1pt)
+- [x] User sees image transition for images coming from network, not when it is loaded from cache (+1pt)
+- [x] Customize the selection effect of the cell (+1pt)
+- [x] For the large poster, load the low resolution image first and then switch to the high resolution image when complete (+2pt)
 
-The following **additional** features are implemented:
+The following **additional** user stories are implemented:
 
-- [x] Ratings
-- [x] language
-- [x] tagline
-- [x] trailers
-- [x] recursive movie selection from detail view
-- [x] genre selection
+- [ ] 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. Icons and images
-2. Ui designing
+1. Downloading images asynchronously
+2. How to cache images for tableview
 
-## Video Walkthrough 
+## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-![alt tag](flicker.gif)
+<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
 Describe any challenges encountered while building the app.
-While building this app the most challenging thing I encountered was trying to customize the ui and icons and such. This probably stems from my lack of imagination and very low skill level in graphical design. Another problem was understand how to parse the JSON data and use different endpoints. I also finally got a macbook so woohoo.
+
 ## License
 
-    Copyright [2016] [Siraj Zaneer]
+    Copyright [2017] [Siraj Zaneer]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
