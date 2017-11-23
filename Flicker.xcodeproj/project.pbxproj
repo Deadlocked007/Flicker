@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5239ED88128985566544DF24 /* Pods_Flicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D6781EBFD9ACFE34CC1AA4 /* Pods_Flicker.framework */; };
+		BB5B02041FC5415D00787AAA /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B02031FC5415D00787AAA /* TabBarViewController.swift */; };
+		BB5B020A1FC5484300787AAA /* FadeSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B02091FC5484300787AAA /* FadeSegue.swift */; };
+		BB5B020E1FC6B49E00787AAA /* MoviesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B020D1FC6B49E00787AAA /* MoviesCollectionViewController.swift */; };
+		BB5B02101FC6B4C400787AAA /* MovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B020F1FC6B4C400787AAA /* MovieCollectionCell.swift */; };
 		C76FDB421FBFE7EC0027D215 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76FDB411FBFE7EC0027D215 /* AppDelegate.swift */; };
 		C76FDB471FBFE7EC0027D215 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C76FDB451FBFE7EC0027D215 /* Main.storyboard */; };
 		C76FDB491FBFE7EC0027D215 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C76FDB481FBFE7EC0027D215 /* Assets.xcassets */; };
@@ -25,6 +29,10 @@
 		2CFD84E1BD71C37DA351825C /* Pods-Flicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flicker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flicker/Pods-Flicker.debug.xcconfig"; sourceTree = "<group>"; };
 		51C88128F86802619685BAF8 /* Pods-Flicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flicker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flicker/Pods-Flicker.release.xcconfig"; sourceTree = "<group>"; };
 		A8D6781EBFD9ACFE34CC1AA4 /* Pods_Flicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB5B02031FC5415D00787AAA /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		BB5B02091FC5484300787AAA /* FadeSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeSegue.swift; sourceTree = "<group>"; };
+		BB5B020D1FC6B49E00787AAA /* MoviesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesCollectionViewController.swift; sourceTree = "<group>"; };
+		BB5B020F1FC6B4C400787AAA /* MovieCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionCell.swift; sourceTree = "<group>"; };
 		C76FDB3E1FBFE7EC0027D215 /* Flicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C76FDB411FBFE7EC0027D215 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C76FDB461FBFE7EC0027D215 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -102,6 +110,10 @@
 				C76FDB5E1FC0111D0027D215 /* MovieResponse.swift */,
 				C76FDB601FC015D80027D215 /* Helper.swift */,
 				C76FDB621FC01BFE0027D215 /* Reachability.swift */,
+				BB5B02031FC5415D00787AAA /* TabBarViewController.swift */,
+				BB5B02091FC5484300787AAA /* FadeSegue.swift */,
+				BB5B020D1FC6B49E00787AAA /* MoviesCollectionViewController.swift */,
+				BB5B020F1FC6B4C400787AAA /* MovieCollectionCell.swift */,
 			);
 			path = Flicker;
 			sourceTree = "<group>";
@@ -235,11 +247,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB5B02101FC6B4C400787AAA /* MovieCollectionCell.swift in Sources */,
 				C76FDB421FBFE7EC0027D215 /* AppDelegate.swift in Sources */,
+				BB5B020E1FC6B49E00787AAA /* MoviesCollectionViewController.swift in Sources */,
 				C76FDB611FC015D80027D215 /* Helper.swift in Sources */,
 				C76FDB551FBFF2090027D215 /* MoviesViewController.swift in Sources */,
 				C76FDB571FBFF23F0027D215 /* Movie.swift in Sources */,
+				BB5B02041FC5415D00787AAA /* TabBarViewController.swift in Sources */,
 				C76FDB5F1FC0111D0027D215 /* MovieResponse.swift in Sources */,
+				BB5B020A1FC5484300787AAA /* FadeSegue.swift in Sources */,
 				C76FDB5D1FC009B30027D215 /* MovieCell.swift in Sources */,
 				C76FDB631FC01BFE0027D215 /* Reachability.swift in Sources */,
 				C76FDB5B1FBFFE9C0027D215 /* MovieClient.swift in Sources */,

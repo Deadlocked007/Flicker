@@ -11,20 +11,27 @@ import UIKit
 let posterBase = "https://image.tmdb.org/t/p/original"
 let posterBaseSmall = "https://image.tmdb.org/t/p/w45"
 
-func downloadImageFromURL(url: String, success: @escaping (UIImage) -> ()) {
+func downloadImageFromURL(urlRequest: URLRequest, success: @escaping (UIImage) -> ()) {
     DispatchQueue.global().async {
-        guard let url = URL(string: url) else {
-            return
-        }
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config, delegate: nil, delegateQueue: nil)
+        config.urlCache = URLCache.shared
         
-        guard let imageData = try? Data(contentsOf: url) else {
-            return
-        }
-        
-        guard let image = UIImage(data: imageData) else {
-            return
-        }
-        
-        success(image)
+        let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
+            if error != nil {
+                return
+            } else if let data = data {
+                
+                let cacheResponse = CachedURLResponse(response: response!, data: data)
+                URLCache.shared.storeCachedResponse(cacheResponse, for: urlRequest)
+                
+                
+                guard let image = UIImage(data: data) else {
+                    return
+                }
+                success(image)
+            }
+        })
+        task.resume()
     }
 }

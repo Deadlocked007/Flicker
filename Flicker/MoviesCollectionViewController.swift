@@ -1,15 +1,15 @@
 //
-//  MoviesViewController.swift
+//  MoviesCollectionViewController.swift
 //  Flicker
 //
-//  Created by Siraj Zaneer on 11/17/17.
+//  Created by Siraj Zaneer on 11/23/17.
 //  Copyright © 2017 Siraj Zaneer. All rights reserved.
 //
 
 import UIKit
 import SVProgressHUD
 
-class MoviesViewController: UITableViewController {
+class MoviesCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var movies = [Movie]()
     var filteredMovies = [Movie]()
@@ -31,9 +31,9 @@ class MoviesViewController: UITableViewController {
             // Fallback on earlier versions
         }
         if #available(iOS 10.0, *) {
-            tableView.refreshControl = refresh
+            collectionView?.refreshControl = refresh
         } else {
-            tableView.addSubview(refresh)
+            collectionView?.addSubview(refresh)
         }
         
         refresh.addTarget(self, action: #selector(loadMovies), for: .valueChanged)
@@ -57,7 +57,7 @@ class MoviesViewController: UITableViewController {
         MovieClient.sharedInstance.getMovies(endpoint: .nowPlaying, page: 1, success: { (movies) in
             self.movies = movies
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+                self.collectionView?.reloadData()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 SVProgressHUD.dismiss()
                 self.refresh.endRefreshing()
@@ -89,11 +89,11 @@ class MoviesViewController: UITableViewController {
         searchController.searchBar.becomeFirstResponder()
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isFiltering() {
             return filteredMovies.count
         }
@@ -101,13 +101,12 @@ class MoviesViewController: UITableViewController {
         return movies.count
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        cell?.setSelected(false, animated: true)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width / 2.0, height: view.frame.width / 2.0 * 1.5)
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MovieCell
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCell", for: indexPath) as! MovieCollectionCell
         
         var movie: Movie!
         cell.tag = indexPath.row
@@ -119,10 +118,6 @@ class MoviesViewController: UITableViewController {
             movie = movies[indexPath.row]
         }
         
-        cell.titleLabel.text = movie.title
-        cell.overviewLabel.text = movie.overview
-        cell.titleLabel.sizeToFit()
-        cell.overviewLabel.sizeToFit()
         let posterUrlSmall = posterBaseSmall + movie.posterPath
         let posterUrlBig = posterBase + movie.posterPath
         let posterUrlSmallRequest = URLRequest(url: URL(string: posterUrlSmall)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
@@ -172,7 +167,7 @@ class MoviesViewController: UITableViewController {
     
 }
 
-extension MoviesViewController: UISearchResultsUpdating, UISearchBarDelegate {
+extension MoviesCollectionViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         //let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
         searchEvents(searchController.searchBar.text!, scope: "All")
@@ -184,7 +179,7 @@ extension MoviesViewController: UISearchResultsUpdating, UISearchBarDelegate {
     
     func searchEvents(_ searchText: String, scope: String = "All") {
         filteredMovies = movies.filter({ (movie) -> Bool in
-            var doesCategoryMatch = (scope == "All")
+            let doesCategoryMatch = (scope == "All")
             
             if searchBarIsEmpty() {
                 return doesCategoryMatch
@@ -192,7 +187,7 @@ extension MoviesViewController: UISearchResultsUpdating, UISearchBarDelegate {
                 return doesCategoryMatch && (movie.title.lowercased().contains(searchText.lowercased()) || movie.overview.lowercased().contains(searchText.lowercased()))
             }
         })
-        self.tableView.reloadData()
+        self.collectionView?.reloadData()
     }
     
     func isFiltering() -> Bool {

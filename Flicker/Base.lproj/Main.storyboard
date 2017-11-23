@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TKr-9G-6hh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="13H-vX-kt0">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Now Playing-->
         <scene sceneID="cdN-km-v7W">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TKr-9G-6hh" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Now Playing" id="J7e-Py-mJb"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LR5-H7-AjI">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -25,7 +26,94 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9KJ-AR-dQV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-914" y="-323"/>
+            <point key="canvasLocation" x="-774" y="-502"/>
+        </scene>
+        <!--Flicker-->
+        <scene sceneID="gya-4c-gXp">
+            <objects>
+                <collectionViewController id="Bgf-zO-vs3" customClass="MoviesCollectionViewController" customModule="Flicker" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="PEc-Kb-QsW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="mNa-9d-f4d">
+                            <size key="itemSize" width="215" height="296"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="movieCell" id="wHW-Yf-nht" customClass="MovieCollectionCell" customModule="Flicker" customModuleProvider="target">
+                                <rect key="frame" x="80" y="0.0" width="215" height="296"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="215" height="296"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Wy-SH-Uxd">
+                                            <rect key="frame" x="0.0" y="0.0" width="215" height="296"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="1Wy-SH-Uxd" firstAttribute="top" secondItem="wHW-Yf-nht" secondAttribute="top" id="e2Q-Pm-Nnb"/>
+                                    <constraint firstAttribute="bottom" secondItem="1Wy-SH-Uxd" secondAttribute="bottom" id="esT-Ku-8Tt"/>
+                                    <constraint firstItem="1Wy-SH-Uxd" firstAttribute="leading" secondItem="wHW-Yf-nht" secondAttribute="leading" id="tpm-V4-eSv"/>
+                                    <constraint firstAttribute="trailing" secondItem="1Wy-SH-Uxd" secondAttribute="trailing" id="xET-MY-KZh"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="posterView" destination="1Wy-SH-Uxd" id="RgK-PI-uDt"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="Bgf-zO-vs3" id="kqA-Qa-lox"/>
+                            <outlet property="delegate" destination="Bgf-zO-vs3" id="o3e-KS-B1u"/>
+                        </connections>
+                    </collectionView>
+                    <tabBarItem key="tabBarItem" title="Now Playing" id="iLp-CH-kIZ"/>
+                    <navigationItem key="navigationItem" title="Flicker" id="FAb-lz-yRu">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="CeZ-ka-RPD">
+                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="9AN-GA-dbZ">
+                                <rect key="frame" x="16" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="1"/>
+                                    <segment title="2"/>
+                                </segments>
+                                <connections>
+                                    <segue destination="TKr-9G-6hh" kind="custom" customClass="FadeSegue" customModule="Flicker" customModuleProvider="target" id="TE8-F8-Ec2"/>
+                                </connections>
+                            </segmentedControl>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="IlB-Bu-36M">
+                            <connections>
+                                <action selector="onSearch:" destination="Bgf-zO-vs3" id="o3N-6N-9V5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RBr-Ej-gbO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-26" y="459"/>
+        </scene>
+        <!--Tab Bar View Controller-->
+        <scene sceneID="9vy-WZ-qgL">
+            <objects>
+                <tabBarController id="13H-vX-kt0" customClass="TabBarViewController" customModule="Flicker" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="P2C-0K-lSt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="TKr-9G-6hh" kind="relationship" relationship="viewControllers" id="Xky-6f-4g6"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i1Q-8m-ye6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1732" y="-459"/>
         </scene>
         <!--Flicker-->
         <scene sceneID="J75-R3-JaV">
@@ -90,6 +178,19 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Flicker" id="t94-zc-SyG">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="fiS-tI-EhD">
+                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="mng-ix-NyJ">
+                                <rect key="frame" x="16" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="1"/>
+                                    <segment title="2"/>
+                                </segments>
+                                <connections>
+                                    <segue destination="imk-4e-FQv" kind="custom" identifier="" customClass="FadeSegue" customModule="Flicker" customModuleProvider="target" id="70H-IY-Npa"/>
+                                </connections>
+                            </segmentedControl>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="0ev-69-5Ns">
                             <connections>
                                 <action selector="onSearch:" destination="SNA-Vr-v0V" id="XSf-CA-1s8"/>
@@ -99,10 +200,33 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hHD-jG-48v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-135.19999999999999" y="-321.42857142857144"/>
+            <point key="canvasLocation" x="14" y="-502"/>
+        </scene>
+        <!--Now Playing-->
+        <scene sceneID="iYa-Pm-Irr">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="imk-4e-FQv" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Now Playing" id="a1u-u6-3XN"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qWD-bu-9L7">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Bgf-zO-vs3" kind="relationship" relationship="rootViewController" id="XW4-Ml-2eF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GqC-nV-d5v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-775" y="286"/>
         </scene>
     </scenes>
     <resources>
         <image name="poster_example" width="213" height="320"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="TE8-F8-Ec2"/>
+    </inferredMetricsTieBreakers>
 </document>
