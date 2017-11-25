@@ -35,3 +35,9 @@ func downloadImageFromURL(urlRequest: URLRequest, success: @escaping (UIImage) -
         task.resume()
     }
 }
+
+extension CGRect {
+    func copy() -> CGRect {
+        return CGRect(x: self.origin.x, y: self.origin.y, width: self.width, height: self.height)
+    }
+}

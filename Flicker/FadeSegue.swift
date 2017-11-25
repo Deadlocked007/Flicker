@@ -16,9 +16,9 @@ class FadeSegue: UIStoryboardSegue {
         let screenWidth = UIScreen.main.bounds.size.width
         let screenHeight = UIScreen.main.bounds.size.height
         secondVCView.alpha = 0.0
-        
         UIView.animate(withDuration: 1.0, animations: { () -> Void in
             firstVCView.alpha = 0.0
+            
             self.source.tabBarController?.viewControllers![(self.source.tabBarController?.selectedIndex)!] = self.destination
             secondVCView.alpha = 1.0
         }) { (Finished) -> Void in

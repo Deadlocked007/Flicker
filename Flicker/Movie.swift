@@ -23,7 +23,7 @@ class Movie {
     var adult: Bool
     var overview: String
     var posterImage: UIImage?
-    //var releaseDate: Date
+    var releaseDate: Date
     
     init(movieInfo: Dictionary<String, Any>) {
         votes = movieInfo["vote_count"] as! Int
@@ -39,24 +39,11 @@ class Movie {
         backdropPath = movieInfo["backdrop_path"] as! String
         adult = movieInfo["adult"] as! Bool
         overview = movieInfo["overview"] as! String
-        //releaseDate = movieInfo["releasedate"] as! Date
+        let dateString = movieInfo["release_date"] as! String
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        releaseDate = dateFormatter.date(from: dateString)!
     }
-//    enum CodingKeys: String, CodingKey {
-//        case votes = "vote_count"
-//        case id
-//        case video
-//        case voteAverage = "vote_average"
-//        case title
-//        case popularity
-//        case posterPath = "poster_path"
-//        case originalLanguage = "original_language"
-//        case originalTitle = "original_title"
-//        case genreIds = "genre_ids"
-//        case backdropPath = "backdrop_path"
-//        case adult
-//        case overview
-//        case releaseDate
-//    }
 }
 
 /*

@@ -15,9 +15,65 @@ class MoviesCollectionViewController: UICollectionViewController, UICollectionVi
     var filteredMovies = [Movie]()
     let searchController = UISearchController(searchResultsController: nil)
     let refresh = UIRefreshControl()
+    var endpoint = MovieListEndpoints.nowPlaying
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tabBarController?.delegate = self
+        switch tabBarController!.selectedIndex {
+        case 0:
+            endpoint = .nowPlaying
+            tabBarController?.tabBar.items![0].image = UIImage(named: "now_playing_tabbar_item")
+            tabBarController?.tabBar.items![0].title = "Now Playing"
+            navigationController?.navigationBar.topItem?.title  = "Now Playing"
+        case 1:
+            endpoint = .topRated
+            tabBarController?.tabBar.items![1].image = UIImage(named: "toprated")
+            tabBarController?.tabBar.items![1].title = "Top Rated"
+            navigationController?.navigationBar.topItem?.title = "Top Rated"
+        case 2:
+            endpoint = .popular
+            tabBarController?.tabBar.items![2].image = UIImage(named: "reel_tabbar_icon")
+            tabBarController?.tabBar.items![2].title = "Popular"
+            navigationController?.navigationBar.topItem?.title = "Popular"
+        case 3:
+            endpoint = .upcoming
+            tabBarController?.tabBar.items![3].image = UIImage(named: "ticket_tabbar_icon")
+            tabBarController?.tabBar.items![3].title = "Upcoming"
+            navigationController?.navigationBar.topItem?.title = "Upcoming"
+        default:
+            break
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        switch tabBarController!.selectedIndex {
+        case 0:
+            endpoint = .nowPlaying
+            tabBarController?.tabBar.items![0].image = UIImage(named: "now_playing_tabbar_item")
+            tabBarController?.tabBar.items![0].title = "Now Playing"
+            navigationController?.navigationBar.topItem?.title  = "Now Playing"
+        case 1:
+            endpoint = .topRated
+            tabBarController?.tabBar.items![1].image = UIImage(named: "toprated")
+            tabBarController?.tabBar.items![1].title = "Top Rated"
+            navigationController?.navigationBar.topItem?.title = "Top Rated"
+        case 2:
+            endpoint = .popular
+            tabBarController?.tabBar.items![2].image = UIImage(named: "reel_tabbar_icon")
+            tabBarController?.tabBar.items![2].title = "Popular"
+            navigationController?.navigationBar.topItem?.title = "Popular"
+        case 3:
+            endpoint = .upcoming
+            tabBarController?.tabBar.items![3].image = UIImage(named: "ticket_tabbar_icon")
+            tabBarController?.tabBar.items![3].title = "Upcoming"
+            navigationController?.navigationBar.topItem?.title = "Upcoming"
+        default:
+            break
+        }
         
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
@@ -35,8 +91,10 @@ class MoviesCollectionViewController: UICollectionViewController, UICollectionVi
         } else {
             collectionView?.addSubview(refresh)
         }
-        
         refresh.addTarget(self, action: #selector(loadMovies), for: .valueChanged)
+        
+        tabBarController?.delegate = self
+        
         UIApplication.shared.beginIgnoringInteractionEvents()
         SVProgressHUD.show()
         if Reachability.isConnectedToNetwork(){
@@ -54,7 +112,7 @@ class MoviesCollectionViewController: UICollectionViewController, UICollectionVi
     }
     
     @objc func loadMovies() {
-        MovieClient.sharedInstance.getMovies(endpoint: .nowPlaying, page: 1, success: { (movies) in
+        MovieClient.sharedInstance.getMovies(endpoint: endpoint, page: 1, success: { (movies) in
             self.movies = movies
             DispatchQueue.main.async {
                 self.collectionView?.reloadData()
@@ -165,6 +223,27 @@ class MoviesCollectionViewController: UICollectionViewController, UICollectionVi
         return cell
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let id = segue.identifier else {
+            return
+        }
+        
+        switch id {
+        case "detailSegue":
+            let destination = segue.destination as! DetailViewController
+            let cell = sender as! MovieCollectionCell
+            let indexPath = collectionView!.indexPath(for: cell)!
+            if isFiltering() {
+                destination.movie = filteredMovies[indexPath.row]
+            } else {
+                destination.movie = movies[indexPath.row]
+            }
+            destination.notTable = true
+            destination.posterImage = cell.posterView.image
+        default:
+            break
+        }
+    }
 }
 
 extension MoviesCollectionViewController: UISearchResultsUpdating, UISearchBarDelegate {
@@ -201,5 +280,13 @@ extension MoviesCollectionViewController: UISearchResultsUpdating, UISearchBarDe
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         searchEvents(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
+    }
+}
+
+extension MoviesViewController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if viewController == self.navigationController {
+            performSegue(withIdentifier: "fadeSegue", sender: nil)
+        }
     }
 }
