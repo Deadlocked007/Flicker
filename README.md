@@ -1,8 +1,8 @@
-# Project 1 - *Flicker*
+# Project 1/2 - *Flicker*
 
 **Name of your app** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **5** hours spent in total
+Time spent: **20** hours spent in total
 
 ## User Stories
 
