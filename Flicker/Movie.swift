@@ -15,11 +15,11 @@ class Movie {
     var voteAverage: Double
     var title: String
     var popularity: Double
-    var posterPath: String
+    var posterPath: String?
     var originalLanguage: String
     var originalTitle: String
     var genreIds: [Int]
-    var backdropPath: String
+    var backdropPath: String?
     var adult: Bool
     var overview: String
     var posterImage: UIImage?
@@ -32,11 +32,11 @@ class Movie {
         voteAverage = movieInfo["vote_average"] as! Double
         title = movieInfo["title"] as! String
         popularity = movieInfo["popularity"] as! Double
-        posterPath = movieInfo["poster_path"] as! String
+        posterPath = movieInfo["poster_path"] as? String
         originalLanguage = movieInfo["original_language"] as! String
         originalTitle = movieInfo["original_title"] as! String
         genreIds = movieInfo["genre_ids"] as! [Int]
-        backdropPath = movieInfo["backdrop_path"] as! String
+        backdropPath = movieInfo["backdrop_path"] as? String
         adult = movieInfo["adult"] as! Bool
         overview = movieInfo["overview"] as! String
         let dateString = movieInfo["release_date"] as! String

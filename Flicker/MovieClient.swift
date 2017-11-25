@@ -12,7 +12,7 @@ class MovieClient {
     
     static let sharedInstance = MovieClient()
     let baseURL = "https://api.themoviedb.org/3/movie/"
-    let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
+    let apiKey = "70ae7d09462b8d19be01b5e2f0d2e752"
     
     func getMovies(endpoint: MovieListEndpoints, page: Int, success: @escaping ([Movie]) -> (), failure: @escaping () -> ()) {
         let urlString = baseURL + endpoint.rawValue
@@ -32,6 +32,7 @@ class MovieClient {
                 for result in results {
                     movies.append(Movie(movieInfo: result))
                 }
+                let totalPages = jsonData["total_pages"] as! Int
                 success(movies)
             }
         }

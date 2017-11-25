@@ -62,36 +62,37 @@ class DetailViewController: UITableViewController {
         backgroundView.frame = fakeBackdropView.frame
         backgroundView.contentMode = .scaleAspectFit
         view.sendSubview(toBack: backgroundView)
-        
-        let backdropUrlSmall = posterBaseSmall + movie.backdropPath
-        let backdropUrlBig = posterBase + movie.backdropPath
-        
-        let backdropUrlSmallRequest = URLRequest(url: URL(string: backdropUrlSmall)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
-        let backdropUrlBigRequest = URLRequest(url: URL(string: backdropUrlBig)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
-        if let cachedImage = URLCache.shared.cachedResponse(for: backdropUrlBigRequest) {
-            DispatchQueue.main.async {
-                self.backgroundView.image = UIImage(data: cachedImage.data)
-            }
-        } else {
-            downloadImageFromURL(urlRequest: backdropUrlSmallRequest) { (smallBackdrop) in
+        if let backdropPath = movie.backdropPath {
+            let backdropUrlSmall = posterBaseSmall + backdropPath
+            let backdropUrlBig = posterBase + backdropPath
+            
+            let backdropUrlSmallRequest = URLRequest(url: URL(string: backdropUrlSmall)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
+            let backdropUrlBigRequest = URLRequest(url: URL(string: backdropUrlBig)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
+            if let cachedImage = URLCache.shared.cachedResponse(for: backdropUrlBigRequest) {
                 DispatchQueue.main.async {
-                    self.backgroundView.alpha = 0.0
-                    self.backgroundView.image = smallBackdrop
-                    
-                    UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                    self.backgroundView.image = UIImage(data: cachedImage.data)
+                }
+            } else {
+                downloadImageFromURL(urlRequest: backdropUrlSmallRequest) { (smallBackdrop) in
+                    DispatchQueue.main.async {
+                        self.backgroundView.alpha = 0.0
+                        self.backgroundView.image = smallBackdrop
                         
-                        self.backgroundView.alpha = 1.0
-                        
-                    }, completion: { (sucess) -> Void in
-                        
-                        downloadImageFromURL(urlRequest: backdropUrlBigRequest) { (largeBackdrop) in
-                            DispatchQueue.main.async {
-                                UIView.transition(with: self.backgroundView, duration: 1.0, options: .transitionCrossDissolve, animations: {
-                                       self.backgroundView.image = largeBackdrop
+                        UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                            
+                            self.backgroundView.alpha = 1.0
+                            
+                        }, completion: { (sucess) -> Void in
+                            
+                            downloadImageFromURL(urlRequest: backdropUrlBigRequest) { (largeBackdrop) in
+                                DispatchQueue.main.async {
+                                    UIView.transition(with: self.backgroundView, duration: 1.0, options: .transitionCrossDissolve, animations: {
+                                        self.backgroundView.image = largeBackdrop
                                     }, completion: nil)
+                                }
                             }
-                        }
-                    })
+                        })
+                    }
                 }
             }
         }
@@ -142,6 +143,9 @@ class DetailViewController: UITableViewController {
             
             destination.posterImage = cell.posterView.image
             destination.notTable = true
+        case "videoSegue":
+            let destination = segue.destination as! VideoViewController
+            destination.id = movie.id
         default:
             break
         }
@@ -163,41 +167,44 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         movie = related[indexPath.row]
         
-        let posterUrlSmall = posterBaseSmall + movie.posterPath
-        let posterUrlBig = posterBase + movie.posterPath
-        let posterUrlSmallRequest = URLRequest(url: URL(string: posterUrlSmall)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
-        let posterUrlBigRequest = URLRequest(url: URL(string: posterUrlBig)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
-        if let cachedImage = URLCache.shared.cachedResponse(for: posterUrlBigRequest) {
-            DispatchQueue.main.async {
-                if (cell.tag == indexPath.row) {
-                    cell.posterView.image = UIImage(data: cachedImage.data)
-                }
-            }
-        } else {
-            downloadImageFromURL(urlRequest: posterUrlSmallRequest) { (smallPoster) in
+        if let posterPath = movie.posterPath {
+            
+            let posterUrlSmall = posterBaseSmall + posterPath
+            let posterUrlBig = posterBase + posterPath
+            let posterUrlSmallRequest = URLRequest(url: URL(string: posterUrlSmall)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
+            let posterUrlBigRequest = URLRequest(url: URL(string: posterUrlBig)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
+            if let cachedImage = URLCache.shared.cachedResponse(for: posterUrlBigRequest) {
                 DispatchQueue.main.async {
                     if (cell.tag == indexPath.row) {
-                        cell.posterView.alpha = 0.0
-                        cell.posterView.image = smallPoster
+                        cell.posterView.image = UIImage(data: cachedImage.data)
                     }
-                    
-                    
-                    UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                }
+            } else {
+                downloadImageFromURL(urlRequest: posterUrlSmallRequest) { (smallPoster) in
+                    DispatchQueue.main.async {
+                        if (cell.tag == indexPath.row) {
+                            cell.posterView.alpha = 0.0
+                            cell.posterView.image = smallPoster
+                        }
                         
-                        cell.posterView.alpha = 1.0
                         
-                    }, completion: { (sucess) -> Void in
-                        
-                        downloadImageFromURL(urlRequest: posterUrlBigRequest) { (largePoster) in
-                            DispatchQueue.main.async {
-                                if (cell.tag == indexPath.row) {
-                                    UIView.transition(with: cell.posterView, duration: 1.0, options: .transitionCrossDissolve, animations: {
-                                        cell.posterView.image = largePoster
-                                    }, completion: nil)
+                        UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                            
+                            cell.posterView.alpha = 1.0
+                            
+                        }, completion: { (sucess) -> Void in
+                            
+                            downloadImageFromURL(urlRequest: posterUrlBigRequest) { (largePoster) in
+                                DispatchQueue.main.async {
+                                    if (cell.tag == indexPath.row) {
+                                        UIView.transition(with: cell.posterView, duration: 1.0, options: .transitionCrossDissolve, animations: {
+                                            cell.posterView.image = largePoster
+                                        }, completion: nil)
+                                    }
                                 }
                             }
-                        }
-                    })
+                        })
+                    }
                 }
             }
         }

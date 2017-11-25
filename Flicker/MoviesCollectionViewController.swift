@@ -16,6 +16,9 @@ class MoviesCollectionViewController: UICollectionViewController, UICollectionVi
     let searchController = UISearchController(searchResultsController: nil)
     let refresh = UIRefreshControl()
     var endpoint = MovieListEndpoints.nowPlaying
+    var isMoreDataLoading = false
+    var loadingMoreView:InfiniteScrollActivityView?
+    var page = 1
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -93,6 +96,14 @@ class MoviesCollectionViewController: UICollectionViewController, UICollectionVi
         }
         refresh.addTarget(self, action: #selector(loadMovies), for: .valueChanged)
         
+        let frame = CGRect(x: 0, y: collectionView!.contentSize.height, width: collectionView!.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.isHidden = true
+        collectionView!.addSubview(loadingMoreView!)
+        var insets = collectionView!.contentInset
+        insets.bottom += InfiniteScrollActivityView.defaultHeight
+        collectionView!.contentInset = insets
+        
         tabBarController?.delegate = self
         
         UIApplication.shared.beginIgnoringInteractionEvents()
@@ -112,18 +123,27 @@ class MoviesCollectionViewController: UICollectionViewController, UICollectionVi
     }
     
     @objc func loadMovies() {
-        MovieClient.sharedInstance.getMovies(endpoint: endpoint, page: 1, success: { (movies) in
+        isMoreDataLoading = true
+        if refresh.isRefreshing {
+            page = 1
+        }
+        
+        MovieClient.sharedInstance.getMovies(endpoint: endpoint, page: page, success: { (movies) in
             self.movies = movies
             DispatchQueue.main.async {
                 self.collectionView?.reloadData()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 SVProgressHUD.dismiss()
                 self.refresh.endRefreshing()
+                self.loadingMoreView!.stopAnimating()
+                self.isMoreDataLoading = false
             }
         }) { () in
             if Reachability.isConnectedToNetwork(){
                 let alert = UIAlertController(title: "Error", message: "There was an issue loading the movies", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Try Again", style: .cancel, handler: { (alert) in
+                    self.loadingMoreView!.stopAnimating()
+                    self.isMoreDataLoading = false
                     SVProgressHUD.show()
                     self.loadMovies()
                 }))
@@ -131,11 +151,16 @@ class MoviesCollectionViewController: UICollectionViewController, UICollectionVi
             }else{
                 let alert = UIAlertController(title: "Error", message: "You are not connected to the Internet!", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Try Again", style: .cancel, handler: { (alert) in
+                    
+                    self.loadingMoreView!.stopAnimating()
+                    self.isMoreDataLoading = false
                     SVProgressHUD.show()
                     self.loadMovies()
                 }))
                 self.present(alert, animated: true, completion: nil)
             }
+            self.loadingMoreView!.stopAnimating()
+            self.isMoreDataLoading = false
             UIApplication.shared.endIgnoringInteractionEvents()
             SVProgressHUD.dismiss()
             self.refresh.endRefreshing()
@@ -145,6 +170,23 @@ class MoviesCollectionViewController: UICollectionViewController, UICollectionVi
     @IBAction func onSearch(_ sender: Any) {
         searchController.isActive = true
         searchController.searchBar.becomeFirstResponder()
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            let scrollViewContentHeight = collectionView!.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - collectionView!.bounds.size.height
+            
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && collectionView!.isDragging) {
+                page += 1
+                
+                let frame = CGRect(x: 0, y: collectionView!.contentSize.height, width: collectionView!.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                loadMovies()
+            }
+        }
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -176,41 +218,44 @@ class MoviesCollectionViewController: UICollectionViewController, UICollectionVi
             movie = movies[indexPath.row]
         }
         
-        let posterUrlSmall = posterBaseSmall + movie.posterPath
-        let posterUrlBig = posterBase + movie.posterPath
-        let posterUrlSmallRequest = URLRequest(url: URL(string: posterUrlSmall)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
-        let posterUrlBigRequest = URLRequest(url: URL(string: posterUrlBig)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
-        if let cachedImage = URLCache.shared.cachedResponse(for: posterUrlBigRequest) {
-            DispatchQueue.main.async {
-                if (cell.tag == indexPath.row) {
-                    cell.posterView.image = UIImage(data: cachedImage.data)
-                }
-            }
-        } else {
-            downloadImageFromURL(urlRequest: posterUrlSmallRequest) { (smallPoster) in
+        if let posterPath = movie.posterPath {
+            
+            let posterUrlSmall = posterBaseSmall + posterPath
+            let posterUrlBig = posterBase + posterPath
+            let posterUrlSmallRequest = URLRequest(url: URL(string: posterUrlSmall)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
+            let posterUrlBigRequest = URLRequest(url: URL(string: posterUrlBig)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
+            if let cachedImage = URLCache.shared.cachedResponse(for: posterUrlBigRequest) {
                 DispatchQueue.main.async {
                     if (cell.tag == indexPath.row) {
-                        cell.posterView.alpha = 0.0
-                        cell.posterView.image = smallPoster
+                        cell.posterView.image = UIImage(data: cachedImage.data)
                     }
-                    
-                    
-                    UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                }
+            } else {
+                downloadImageFromURL(urlRequest: posterUrlSmallRequest) { (smallPoster) in
+                    DispatchQueue.main.async {
+                        if (cell.tag == indexPath.row) {
+                            cell.posterView.alpha = 0.0
+                            cell.posterView.image = smallPoster
+                        }
                         
-                        cell.posterView.alpha = 1.0
                         
-                    }, completion: { (sucess) -> Void in
-                        
-                        downloadImageFromURL(urlRequest: posterUrlBigRequest) { (largePoster) in
-                            DispatchQueue.main.async {
-                                if (cell.tag == indexPath.row) {
-                                    UIView.transition(with: cell.posterView, duration: 1.0, options: .transitionCrossDissolve, animations: {
-                                        cell.posterView.image = largePoster
-                                    }, completion: nil)
+                        UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                            
+                            cell.posterView.alpha = 1.0
+                            
+                        }, completion: { (sucess) -> Void in
+                            
+                            downloadImageFromURL(urlRequest: posterUrlBigRequest) { (largePoster) in
+                                DispatchQueue.main.async {
+                                    if (cell.tag == indexPath.row) {
+                                        UIView.transition(with: cell.posterView, duration: 1.0, options: .transitionCrossDissolve, animations: {
+                                            cell.posterView.image = largePoster
+                                        }, completion: nil)
+                                    }
                                 }
                             }
-                        }
-                    })
+                        })
+                    }
                 }
             }
         }

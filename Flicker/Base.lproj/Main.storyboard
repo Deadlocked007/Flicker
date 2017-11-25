@@ -8,6 +8,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -132,12 +133,16 @@
                                                         <constraint firstAttribute="width" secondItem="Plr-Sc-m51" secondAttribute="height" multiplier="16:9" id="bww-d6-0FQ"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="poster_example" translatesAutoresizingMaskIntoConstraints="NO" id="eu0-75-QCw">
+                                                <imageView hidden="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="poster_example" translatesAutoresizingMaskIntoConstraints="NO" id="eu0-75-QCw">
                                                     <rect key="frame" x="8" y="151" width="105.66666666666667" height="158.66666666666663"/>
+                                                    <gestureRecognizers/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="158.66999999999999" id="0el-KY-Jwm"/>
                                                         <constraint firstAttribute="width" constant="105.67" id="HyG-HM-CIq"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="SwH-DA-adD" appends="YES" id="PBW-01-4Sf"/>
+                                                    </connections>
                                                 </imageView>
                                                 <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zOY-eQ-nBW">
                                                     <rect key="frame" x="8" y="344.33333333333331" width="359" height="201.99999999999994"/>
@@ -264,8 +269,58 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OWP-dA-lAs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="SwH-DA-adD">
+                    <connections>
+                        <segue destination="gXB-Sd-5Le" kind="presentation" identifier="videoSegue" id="eam-BL-lUC"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2218.4000000000001" y="-86.453201970443359"/>
+            <point key="canvasLocation" x="-2300" y="-191"/>
+        </scene>
+        <!--Video View Controller-->
+        <scene sceneID="QSO-EJ-FSZ">
+            <objects>
+                <viewController id="gXB-Sd-5Le" customClass="VideoViewController" customModule="Flicker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0Ey-uo-mNU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="55J-KB-gkh">
+                                <rect key="frame" x="16" y="60" width="30" height="48"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
+                                <state key="normal" title="X">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="onCancel:" destination="gXB-Sd-5Le" eventType="touchUpInside" id="Rek-E6-ndC"/>
+                                </connections>
+                            </button>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rK3-gO-I9N">
+                                <rect key="frame" x="0.0" y="301" width="375" height="210.66666666666663"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="rK3-gO-I9N" secondAttribute="height" multiplier="16:9" id="bpt-wQ-LNG"/>
+                                </constraints>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="rK3-gO-I9N" firstAttribute="centerX" secondItem="0Ey-uo-mNU" secondAttribute="centerX" id="8nj-Ii-jfL"/>
+                            <constraint firstItem="55J-KB-gkh" firstAttribute="top" secondItem="qA0-vm-tmq" secondAttribute="top" constant="16" id="Czf-Bw-tWT"/>
+                            <constraint firstItem="rK3-gO-I9N" firstAttribute="leading" secondItem="qA0-vm-tmq" secondAttribute="leading" id="HQy-XX-PXm"/>
+                            <constraint firstItem="55J-KB-gkh" firstAttribute="leading" secondItem="qA0-vm-tmq" secondAttribute="leading" constant="16" id="YxB-mt-eG9"/>
+                            <constraint firstItem="rK3-gO-I9N" firstAttribute="centerY" secondItem="0Ey-uo-mNU" secondAttribute="centerY" id="hPJ-n1-S2M"/>
+                            <constraint firstItem="qA0-vm-tmq" firstAttribute="trailing" secondItem="rK3-gO-I9N" secondAttribute="trailing" id="tb7-4E-BKe"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qA0-vm-tmq"/>
+                    </view>
+                    <connections>
+                        <outlet property="videoView" destination="rK3-gO-I9N" id="1qq-cB-Lfg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZVh-2j-IPr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-652" y="-204.67980295566502"/>
         </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="9vy-WZ-qgL">

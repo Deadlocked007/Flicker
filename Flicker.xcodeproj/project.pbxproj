@@ -14,6 +14,8 @@
 		BB5B02101FC6B4C400787AAA /* MovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B020F1FC6B4C400787AAA /* MovieCollectionCell.swift */; };
 		BB5B02121FC8206000787AAA /* DetailSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B02111FC8206000787AAA /* DetailSegue.swift */; };
 		BB5B02141FC827BA00787AAA /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B02131FC827BA00787AAA /* DetailViewController.swift */; };
+		BB5B02181FC94D9100787AAA /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B02171FC94D9100787AAA /* InfiniteScrollActivityView.swift */; };
+		BB5B021A1FC9523200787AAA /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B02191FC9523200787AAA /* VideoViewController.swift */; };
 		C76FDB421FBFE7EC0027D215 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76FDB411FBFE7EC0027D215 /* AppDelegate.swift */; };
 		C76FDB471FBFE7EC0027D215 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C76FDB451FBFE7EC0027D215 /* Main.storyboard */; };
 		C76FDB491FBFE7EC0027D215 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C76FDB481FBFE7EC0027D215 /* Assets.xcassets */; };
@@ -37,6 +39,8 @@
 		BB5B020F1FC6B4C400787AAA /* MovieCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionCell.swift; sourceTree = "<group>"; };
 		BB5B02111FC8206000787AAA /* DetailSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSegue.swift; sourceTree = "<group>"; };
 		BB5B02131FC827BA00787AAA /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		BB5B02171FC94D9100787AAA /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
+		BB5B02191FC9523200787AAA /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		C76FDB3E1FBFE7EC0027D215 /* Flicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C76FDB411FBFE7EC0027D215 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C76FDB461FBFE7EC0027D215 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -120,6 +124,8 @@
 				BB5B020F1FC6B4C400787AAA /* MovieCollectionCell.swift */,
 				BB5B02111FC8206000787AAA /* DetailSegue.swift */,
 				BB5B02131FC827BA00787AAA /* DetailViewController.swift */,
+				BB5B02171FC94D9100787AAA /* InfiniteScrollActivityView.swift */,
+				BB5B02191FC9523200787AAA /* VideoViewController.swift */,
 			);
 			path = Flicker;
 			sourceTree = "<group>";
@@ -253,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB5B02181FC94D9100787AAA /* InfiniteScrollActivityView.swift in Sources */,
 				BB5B02101FC6B4C400787AAA /* MovieCollectionCell.swift in Sources */,
 				C76FDB421FBFE7EC0027D215 /* AppDelegate.swift in Sources */,
 				BB5B020E1FC6B49E00787AAA /* MoviesCollectionViewController.swift in Sources */,
@@ -262,6 +269,7 @@
 				BB5B02041FC5415D00787AAA /* TabBarViewController.swift in Sources */,
 				C76FDB5F1FC0111D0027D215 /* MovieResponse.swift in Sources */,
 				BB5B020A1FC5484300787AAA /* FadeSegue.swift in Sources */,
+				BB5B021A1FC9523200787AAA /* VideoViewController.swift in Sources */,
 				BB5B02121FC8206000787AAA /* DetailSegue.swift in Sources */,
 				C76FDB5D1FC009B30027D215 /* MovieCell.swift in Sources */,
 				C76FDB631FC01BFE0027D215 /* Reachability.swift in Sources */,
