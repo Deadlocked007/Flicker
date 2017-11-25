@@ -129,7 +129,11 @@ class MoviesCollectionViewController: UICollectionViewController, UICollectionVi
         }
         
         MovieClient.sharedInstance.getMovies(endpoint: endpoint, page: page, success: { (movies) in
-            self.movies = movies
+            if self.page == 1 {
+                self.movies = movies
+            } else {
+                self.movies.append(contentsOf: movies)
+            }
             DispatchQueue.main.async {
                 self.collectionView?.reloadData()
                 UIApplication.shared.endIgnoringInteractionEvents()
