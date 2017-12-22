@@ -217,65 +217,13 @@ class MoviesViewController: UITableViewController {
         
         var movie: Movie!
         cell.tag = indexPath.row
-        cell.posterView.image = nil
+        cell.index = indexPath.row
         
         if isFiltering() {
-            movie = filteredMovies[indexPath.row]
+            cell.movie = filteredMovies[indexPath.row]
         } else {
-            movie = movies[indexPath.row]
+            cell.movie = movies[indexPath.row]
         }
-        
-        cell.titleLabel.text = movie.title
-        cell.overviewLabel.text = movie.overview
-        cell.titleLabel.textColor = .black
-        cell.overviewLabel.textColor = .black
-        cell.titleLabel.sizeToFit()
-        if let posterPath = movie.posterPath {
-            let posterUrlSmall = posterBaseSmall + posterPath
-            let posterUrlBig = posterBase + posterPath
-            let posterUrlSmallRequest = URLRequest(url: URL(string: posterUrlSmall)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
-            let posterUrlBigRequest = URLRequest(url: URL(string: posterUrlBig)!, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
-            if let cachedImage = URLCache.shared.cachedResponse(for: posterUrlBigRequest) {
-                DispatchQueue.main.async {
-                    if (cell.tag == indexPath.row) {
-                        cell.posterView.image = UIImage(data: cachedImage.data)
-                    }
-                }
-            } else {
-                downloadImageFromURL(urlRequest: posterUrlSmallRequest) { (smallPoster) in
-                    DispatchQueue.main.async {
-                        if (cell.tag == indexPath.row) {
-                            cell.posterView.alpha = 0.0
-                            cell.posterView.image = smallPoster
-                        }
-                        
-                        
-                        UIView.animate(withDuration: 0.3, animations: { () -> Void in
-                            
-                            cell.posterView.alpha = 1.0
-                            
-                        }, completion: { (sucess) -> Void in
-                            
-                            downloadImageFromURL(urlRequest: posterUrlBigRequest) { (largePoster) in
-                                DispatchQueue.main.async {
-                                    if (cell.tag == indexPath.row) {
-                                        UIView.transition(with: cell.posterView, duration: 1.0, options: .transitionCrossDissolve, animations: {
-                                            cell.posterView.image = largePoster
-                                        }, completion: nil)
-                                    }
-                                }
-                            }
-                        })
-                    }
-                }
-            }
-        }
-        
-        
-        //cell.selectionStyle = .none
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = UIColor.darkGray
-        cell.selectedBackgroundView = backgroundView
         
         return cell
     }

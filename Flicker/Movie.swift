@@ -44,6 +44,16 @@ class Movie {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         releaseDate = dateFormatter.date(from: dateString)!
     }
+    
+    class func movies(dictionaries: [[String: Any]]) -> [Movie] {
+        var movies: [Movie] = []
+        for dictionary in dictionaries {
+            let movie = Movie(movieInfo: dictionary)
+            movies.append(movie)
+        }
+        
+        return movies
+    }
 }
 
 /*

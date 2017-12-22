@@ -28,11 +28,7 @@ class MovieClient {
             } else if let data = data {
                 let jsonData = try! JSONSerialization.jsonObject(with: data, options: []) as! Dictionary<String, Any>
                 let results = jsonData["results"] as! [Dictionary<String, Any>]
-                var movies = [Movie]()
-                for result in results {
-                    movies.append(Movie(movieInfo: result))
-                }
-                let totalPages = jsonData["total_pages"] as! Int
+                let movies = Movie.movies(dictionaries: results)
                 success(movies)
             }
         }
@@ -80,10 +76,7 @@ class MovieClient {
             } else if let data = data {
                 if let responseDictionary = try! JSONSerialization.jsonObject(with: data, options:[]) as? Dictionary<String, Any> {
                     let related = responseDictionary["results"] as! [Dictionary<String, Any>]
-                    var movies = [Movie]()
-                    for result in related {
-                        movies.append(Movie(movieInfo: result))
-                    }
+                    let movies = Movie.movies(dictionaries: related)
                     success(movies)
                 }
             }
